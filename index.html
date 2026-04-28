@@ -14,14 +14,12 @@
         .card { background: var(--white); width: 100%; max-width: 800px; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
         .hidden { display: none !important; }
 
-        /* Navigation */
         .nav-item { padding: 12px; margin: 5px 0; border-radius: 8px; cursor: pointer; color: #7f8c8d; display: flex; justify-content: space-between; align-items: center; }
         .nav-item.active { background: var(--primary); color: white; }
         .nav-item.locked { opacity: 0.5; cursor: not-allowed; }
         .check-mark { display: none; color: var(--green); font-weight: bold; }
         .completed .check-mark { display: inline; }
 
-        /* Practice Styling */
         .s1-img { width: 50%; display: block; margin: 20px auto; border-radius: 8px; }
         .s2-img { width: 85%; display: block; margin: 20px auto; border-radius: 8px; }
         .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 20px; }
@@ -37,11 +35,13 @@
         
         input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
 
-        /* Certificate Styling */
-        .cert-border { border: 15px double var(--gold); padding: 50px; background: #fff; text-align: center; color: #2c3e50; }
-        .cert-header { font-family: 'Cinzel', serif; font-size: 3rem; margin: 0; color: #1a252f; }
-        .cert-name-input { font-family: 'Great Vibes', cursive; font-size: 2.8rem; border: none; border-bottom: 2px solid #333; text-align: center; width: 85%; outline: none; margin: 25px 0; background: transparent; }
-        .seal { width: 100px; height: 100px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-family: 'Cinzel'; transform: rotate(-10deg); border: 4px double white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: 20px auto; }
+        /* Smaller Certificate */
+        #page-cert { max-width: 500px; padding: 20px; }
+        .cert-border { border: 8px double var(--gold); padding: 20px; background: #fff; text-align: center; color: #2c3e50; }
+        .cert-header { font-family: 'Cinzel', serif; font-size: 1.5rem; margin: 0; color: #1a252f; }
+        .cert-name-input { font-family: 'Great Vibes', cursive; font-size: 1.8rem; border: none; border-bottom: 2px solid #333; text-align: center; width: 90%; outline: none; margin: 15px 0; background: transparent; }
+        .seal { width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: bold; font-family: 'Cinzel'; transform: rotate(-10deg); border: 2px double white; margin: 10px auto; }
+        #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 20px; padding-top: 10px; }
     </style>
 </head>
 <body>
@@ -57,22 +57,25 @@
 <div id="main-container">
     <div id="page-intro" class="card">
         <h1 style="text-align: center;">Ecology Energy Flow Activity</h1>
-        <p>Complete each portion of this interactive in order. You will receive a green check mark on the left side to show you are done. Once all portions are completed, you will unlock a mastery quiz. You must get a 70% or higher to receive your certificate of completion.</p>
+        <p>You will need to complete each portion of this interactive in order. You will receive a green check mark on the left hand side Next to the title to show you are done. Once all portions are completed you will then unlock a mastery quiz. You must get a 70% or higher to receive your certificate of completion which you will then screen shot and load into your submission on canvas.</p>
         <div style="text-align: center;"><button class="btn" onclick="unlock('s1')">Start Activity</button></div>
     </div>
 
     <div id="page-s1" class="card hidden">
         <h2>Food Chains and Food Webs</h2>
-        <p>Food chains and food webs represent feeding relationships and model how energy and matter move through ecosystems.</p>
+        <p>Food chains and food webs are diagrams that represent feeding relationships. Essentially, they show who eats whom. In this way, they model how energy and matter move through ecosystems.</p>
+        <h3>Food Chains</h3>
+        <p>A food chain represents a single pathway by which energy and matter flow through an ecosystem. An example is shown in Figure below. Food chains are generally simpler than what really happens in nature. Most organisms consume—and are consumed by—more than one species.</p>
         <img src="5.jpg" class="s1-img">
-        <p>An interconnected network of multiple food chains is called a food web.</p>
+        <p>Food chains tend to be overly simplistic representations of what really happens in nature. Food chains are not isolated in reality, most species consume multiple species and in turn are, consumed by multiple other species. An interconnected network of multiple food chains occur called food web. An example of a food web is shown in the Figure below, which includes terrestrial and aquatic organisms.</p>
         <img src="4.jpg" class="s1-img">
+        <p id="citation">Source: CK-12 Foundation. (2024). Food Chains and Food Webs.</p>
         <div style="text-align: center;"><button class="btn" onclick="showSub('s1-practice')">Let's Practice!</button></div>
     </div>
 
     <div id="page-s1-practice" class="card hidden">
         <h2>Section 1 Practice</h2>
-        <p>Analyze the food web (6.jpg) and identify the specific organisms for each role based on the diagram.</p>
+        <p>Analyze the food web (6.jpg) and identify the specific organisms for each role.</p>
         <img src="6.jpg" style="width: 70%; display: block; margin: auto;">
         <div id="s1-questions">
             <p>1. Identify a Producer: <input type="text" id="s1-p1"></p>
@@ -87,9 +90,11 @@
 
     <div id="page-s2" class="card hidden">
         <h2>Pyramid of Energy</h2>
-        <p>Only about 10 percent of energy is transferred to the next trophic level. The rest is lost as heat.</p>
+        <p>Energy flows through the food chain from one trophic level to the next. However, only about 10 percent of the total energy stored in organisms at one trophic level is actually transferred to organisms at the next trophic level. The rest of the energy is used for metabolic processes or lost to the environment as heat. As a result, less energy is available to organisms at each successive trophic level. This explains why there are rarely more than five trophic levels in a food chain. The amount of energy at different trophic levels can be represented by an energy pyramid like the one in the Figure below. The materials in dead organisms and wastes at all trophic levels are broken down by decomposers. Organisms such as detritivores return needed elements to the ecosystem and use up most remaining energy. Because of the reduction in energy at each trophic level, virtually no energy remains. Therefore, energy must be continuously added to ecosystems by producers. Pyramid of Energy is always upright.</p>
         <img src="3.jpg" class="s2-img">
+        <p>The <b>10% Rule</b> is a fundamental concept in ecology. It states that only about <b>10% of the energy</b> from one trophic level is passed on to the next. The remaining 90% is lost as heat or used for metabolic processes by the organism itself. In this simulation, we'll start with a large amount of solar energy captured by producers and see how little energy makes it to the top of the food chain.</p>
         <img src="1.jpg" class="s2-img">
+        <p id="citation">Source: CK-12 Foundation. (2024). Pyramid of Energy.</p>
         <div style="text-align: center;"><button class="btn" onclick="showSub('s2-practice')">Let's Practice!</button></div>
     </div>
 
@@ -115,24 +120,21 @@
 
     <div id="page-cert" class="card hidden">
         <div class="cert-border">
-            <h1 class="cert-header">Certificate of Completion</h1>
-            <p style="font-weight: bold; color: var(--gold); letter-spacing: 2px;">ECOLOGY ENERGY FLOW MASTERY</p>
-            <p>This certifies that</p>
-            <input type="text" class="cert-name-input" placeholder="Type Your Name Here">
-            <p>has mastered Food Web dynamics and the 10% Energy Rule with a score of:</p>
-            <h2 id="display-score" style="color: var(--primary); font-size: 2.5rem; margin: 10px 0;"></h2>
-            <div class="seal">EXCELLENT</div>
-            <p>Date: <b id="display-date"></b></p>
+            <h1 class="cert-header">Certificate</h1>
+            <p style="font-size: 0.8rem; font-weight: bold; color: var(--gold);">ENERGY FLOW MASTERY</p>
+            <input type="text" class="cert-name-input" placeholder="Type Name">
+            <p style="font-size: 0.9rem;">Passed with score of:</p>
+            <h2 id="display-score" style="color: var(--primary); font-size: 1.5rem; margin: 5px 0;"></h2>
+            <div class="seal">PASS</div>
+            <p style="font-size: 0.7rem;">Date: <b id="display-date"></b></p>
         </div>
-        <p style="text-align:center; margin-top:20px;">Type your name, then screenshot this page for your submission!</p>
     </div>
 </div>
 
 <script>
     let state = { intro: true, s1: false, s2: false, quiz: false };
-    let score = 0, curQ = 0, randomizedQuestions = [];
+    let score = 0, curQ = 0, randomizedQuestions = [], attempts = 0;
 
-    // SECTION 1 STRICT ANSWER KEY
     function checkS1() {
         const fb = document.getElementById('s1-fb');
         const p1 = document.getElementById('s1-p1').value.toLowerCase().trim();
@@ -160,31 +162,24 @@
             fb.innerText = "The following are incorrect: " + errors.join(", ");
             fb.className = "feedback-box wrong";
         } else {
-            fb.innerText = "Excellent! You have correctly identified the roles. Section 2 is now open.";
+            fb.innerText = "Correct! Section 2 is now open.";
             fb.className = "feedback-box correct";
             unlock('s2');
         }
     }
 
-    // SECTION 2 CHECK
     function checkS2() {
         const v1 = document.getElementById('s2-t1').value;
         const v2 = document.getElementById('s2-t2').value;
         const v3 = document.getElementById('s2-t3').value;
         const v4 = document.getElementById('s2-t4').value;
         const fb = document.getElementById('s2-fb');
-
         if (v1 == 10000 && v2 == 1000 && v3 == 100 && v4 == 10) {
-            fb.innerText = "Correct Math! Launching the Mastery Quiz...";
-            fb.className = "feedback-box correct";
+            fb.innerText = "Correct! Launching Quiz..."; fb.className = "feedback-box correct";
             setTimeout(() => { state.quiz = true; startQuiz(); navigate('quiz'); }, 1500);
-        } else {
-            fb.innerText = "Check your calculations. Remember the 10% rule!";
-            fb.className = "feedback-box wrong";
-        }
+        } else { fb.innerText = "Incorrect. Try again."; fb.className = "feedback-box wrong"; }
     }
 
-    // NAVIGATION
     function navigate(id) {
         if (!state[id]) return;
         document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
@@ -206,7 +201,6 @@
         navigate(id);
     }
 
-    // QUIZ DATA & LOGIC
     const section1Bank = [
         { type: 'multi', q: "Which diagram shows many interconnected pathways of energy?", a: "Food Web", o: ["Food Chain", "Food Web", "Energy Pyramid", "Sun Map"] },
         { type: 'multi', q: "An organism that eats only plants is a:", a: "Primary Consumer", o: ["Producer", "Primary Consumer", "Secondary Consumer", "Decomposer"] },
@@ -217,72 +211,70 @@
 
     const pyramidBank = [
         { type: 'pyramid', levels: 4, startVal: 5000, startLevel: 'Producers', a: [5, 50, 500, 5000] },
-        { type: 'pyramid', levels: 3, startVal: 100, startLevel: 'Secondary Consumers', a: [100, 1000, 10000] },
-        { type: 'pyramid', levels: 4, startVal: 10, startLevel: 'Tertiary Consumers', a: [10, 100, 1000, 10000] },
-        { type: 'pyramid', levels: 3, startVal: 400, startLevel: 'Primary Consumers', a: [40, 400, 4000] },
-        { type: 'pyramid', levels: 4, startVal: 1, startLevel: 'Tertiary Consumers', a: [1, 10, 100, 1000] }
+        { type: 'pyramid', levels: 3, startVal: 100, startLevel: 'Secondary Consumers', a: [100, 1000, 10000] }
     ];
 
     function startQuiz() {
-        const s1 = section1Bank.sort(() => 0.5 - Math.random()).slice(0, 5);
-        const s2 = pyramidBank.sort(() => 0.5 - Math.random()).slice(0, 5);
-        randomizedQuestions = [...s1, ...s2].sort(() => 0.5 - Math.random());
+        randomizedQuestions = [...section1Bank, ...pyramidBank].sort(() => 0.5 - Math.random()).slice(0,10);
         curQ = 0; score = 0; showQuestion();
     }
 
     function showQuestion() {
         const q = randomizedQuestions[curQ];
         const area = document.getElementById('quiz-area');
-        document.getElementById('quiz-header').innerText = `Question ${curQ + 1} of 10`;
         document.getElementById('quiz-fb').style.display = 'none';
         document.getElementById('quiz-next').style.display = 'none';
-
         if (q.type === 'multi') {
             area.innerHTML = `<p>${q.q}</p>` + q.o.map(opt => `<button class="btn" style="display:block; width:100%;" onclick="ans('${opt}')">${opt}</button>`).join('');
         } else {
-            let labels = ["Tertiary Consumer", "Secondary Consumer", "Primary Consumer", "Producer"];
-            let startIdx = 4 - q.levels;
-            let pyramidHtml = `<p>The <b>${q.startLevel}</b> has <b>${q.startVal}</b> energy. Fill the rest correctly.</p><div class="pyramid-container">`;
-            for (let i = startIdx; i < 4; i++) {
-                pyramidHtml += `<div class="tier t${4-i}">${labels[i]}: <input type="number" id="qval-${i-startIdx}"> J</div>`;
-            }
-            area.innerHTML = pyramidHtml + `</div><button class="btn" onclick="ansPyramid()">Submit Answer</button>`;
+            area.innerHTML = `<p>${q.startLevel} has ${q.startVal} J. Fill levels.</p><div class="pyramid-container">` + 
+            Array.from({length: q.levels}).map((_, i) => `<input type="number" id="qval-${i}" placeholder="Level ${i+1}">`).join('') + 
+            `</div><button class="btn" onclick="ansPyramid()">Submit</button>`;
         }
     }
 
     function ans(choice) {
         const q = randomizedQuestions[curQ];
         const fb = document.getElementById('quiz-fb');
+        const nextBtn = document.getElementById('quiz-next');
         fb.style.display = 'block';
-        if (choice === q.a) { score++; fb.innerText = "Correct!"; fb.className = "feedback-box correct"; }
-        else { fb.innerText = "Incorrect. The answer was: " + q.a; fb.className = "feedback-box wrong"; }
-        document.getElementById('quiz-next').style.display = 'inline-block';
+        if (choice === q.a) { 
+            fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
+            nextBtn.innerText = "Next Question"; score++;
+        } else { 
+            fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; 
+            nextBtn.innerText = "Try Again";
+        }
+        nextBtn.style.display = 'inline-block';
     }
 
     function ansPyramid() {
         const q = randomizedQuestions[curQ];
         const fb = document.getElementById('quiz-fb');
+        const nextBtn = document.getElementById('quiz-next');
         fb.style.display = 'block';
         let correct = true;
-        for (let i = 0; i < q.levels; i++) {
-            if (document.getElementById(`qval-${i}`).value != q.a[i]) correct = false;
+        for (let i = 0; i < q.levels; i++) if (document.getElementById(`qval-${i}`).value != q.a[i]) correct = false;
+        if (correct) { 
+            fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
+            nextBtn.innerText = "Next Question"; score++;
+        } else { 
+            fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; 
+            nextBtn.innerText = "Try Again";
         }
-        if (correct) { score++; fb.innerText = "Correct!"; fb.className = "feedback-box correct"; }
-        else { fb.innerText = "Incorrect. The correct values were: " + q.a.join(", "); fb.className = "feedback-box wrong"; }
-        document.getElementById('quiz-next').style.display = 'inline-block';
+        nextBtn.style.display = 'inline-block';
     }
 
     function nextQuestion() {
-        curQ++;
-        if (curQ < 10) showQuestion();
-        else {
-            if (score >= 7) {
-                document.getElementById('display-score').innerText = (score * 10) + "%";
+        if (document.getElementById('quiz-next').innerText === "Try Again") {
+            showQuestion();
+        } else {
+            curQ++;
+            if (curQ < randomizedQuestions.length) showQuestion();
+            else {
+                document.getElementById('display-score').innerText = (score/randomizedQuestions.length * 100) + "%";
                 document.getElementById('display-date').innerText = new Date().toLocaleDateString();
                 showSub('cert');
-            } else {
-                alert(`Score: ${score}/10. You need 7/10 to pass. Restarting quiz...`);
-                startQuiz();
             }
         }
     }
