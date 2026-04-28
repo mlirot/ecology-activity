@@ -6,282 +6,227 @@
     <title>Ecology Energy Flow Activity</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2e7d32;
-            --accent: #81c784;
-            --bg: #f8f9fa;
-            --text: #2c3e50;
-            --white: #ffffff;
-            --error: #e74c3c;
-        }
-
+        :root { --primary: #2e7d32; --accent: #81c784; --bg: #f8f9fa; --text: #2c3e50; --white: #ffffff; --error: #e74c3c; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
-
-        /* Sidebar Navigation */
+        
+        /* Sidebar */
         #sidebar { width: 280px; background: var(--white); border-right: 1px solid #e0e0e0; padding: 30px 20px; display: flex; flex-direction: column; }
-        .nav-item { padding: 15px; margin: 8px 0; border-radius: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; color: #7f8c8d; font-weight: 600; }
-        .nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2); }
+        .nav-item { padding: 15px; margin: 8px 0; border-radius: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: #7f8c8d; font-weight: 600; }
+        .nav-item.active { background: var(--primary); color: white; }
         .nav-item.locked { opacity: 0.5; cursor: not-allowed; }
-        .check-mark { font-size: 1.2rem; color: #4caf50; display: none; }
+        .check-mark { color: #4caf50; display: none; font-weight: bold; }
         .completed .check-mark { display: inline; }
 
-        /* Content Area */
+        /* Content */
         #content-wrapper { flex-grow: 1; overflow-y: auto; padding: 40px; display: flex; justify-content: center; }
-        .content-card { background: var(--white); width: 100%; max-width: 900px; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; }
+        .content-card { background: var(--white); width: 100%; max-width: 850px; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; margin-bottom: 50px; }
         .hidden { display: none; }
-
-        /* Aesthetics & UI Elements */
-        h1, h2 { color: var(--primary); }
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.2s; margin-top: 20px; }
-        .btn:hover { background: #1b5e20; transform: translateY(-2px); }
-        .btn:disabled { background: #ccc; cursor: not-allowed; }
         
-        .feedback { margin-top: 15px; padding: 10px; border-radius: 8px; font-weight: 600; display: none; }
+        .img-fluid { max-width: 100%; border-radius: 10px; margin: 20px 0; border: 1px solid #eee; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 20px; }
+        .btn:disabled { background: #ccc; }
+        
+        .feedback-box { padding: 15px; border-radius: 8px; margin-top: 15px; font-weight: 600; display: none; }
         .correct { background: #e8f5e9; color: #2e7d32; display: block; }
         .wrong { background: #ffebee; color: #c62828; display: block; }
 
-        /* Interactive Components */
-        .image-container { text-align: center; margin: 20px 0; }
-        .image-placeholder { background: #eee; border: 2px dashed #ccc; height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
         .quiz-option { display: block; background: #f1f3f5; padding: 15px; margin: 10px 0; border-radius: 10px; cursor: pointer; border: 2px solid transparent; }
         .quiz-option:hover { border-color: var(--accent); }
         
-        /* Certificate Style */
-        #certificate { border: 15px double var(--primary); padding: 40px; text-align: center; position: relative; }
-        #cert-name { border-bottom: 2px solid #333; font-size: 2rem; display: inline-block; min-width: 300px; }
+        #certificate { border: 15px double var(--primary); padding: 40px; text-align: center; background: white; }
     </style>
 </head>
 <body>
 
 <div id="sidebar">
-    <h2 style="font-size: 1.2rem; margin-bottom: 30px;">Ecology Mastery</h2>
-    <div id="nav-intro" class="nav-item active" onclick="navigate('intro')">Intro <span class="check-mark">✓</span></div>
-    <div id="nav-section1" class="nav-item locked" onclick="navigate('section1')">Trophic Levels <span class="check-mark">✓</span></div>
-    <div id="nav-section2" class="nav-item locked" onclick="navigate('section2')">10% Rule & Biomass <span class="check-mark">✓</span></div>
+    <h2 style="font-size: 1.1rem; color: var(--primary);">Ecology Energy Flow</h2>
+    <div id="nav-intro" class="nav-item active" onclick="navigate('intro')">Introduction <span class="check-mark">✓</span></div>
+    <div id="nav-s1" class="nav-item locked" onclick="navigate('s1')">Trophic Levels <span class="check-mark">✓</span></div>
+    <div id="nav-s2" class="nav-item locked" onclick="navigate('s2')">10% Rule & Biomass <span class="check-mark">✓</span></div>
     <div id="nav-quiz" class="nav-item locked" onclick="navigate('quiz')">Mastery Quiz <span class="check-mark">✓</span></div>
 </div>
 
 <div id="content-wrapper">
     <div id="page-intro" class="content-card">
-        <h1>Ecology Energy Flow Activity</h1>
-        <p>Welcome to your interactive biology module. In this activity, you will master how energy and biomass circulate through ecosystems.</p>
-        <div style="background: #e3f2fd; padding: 20px; border-left: 5px solid #2196f3; border-radius: 4px;">
-            <strong>Course Instructions:</strong>
-            <ul>
-                <li>You must read the information in each section carefully.</li>
-                <li>Complete the "Try It Yourself" interactive activities to unlock the next section.</li>
-                <li>A green check mark in the sidebar indicates a section is finalized.</li>
-                <li>Final Mastery Quiz requires a <strong>70% (7/10)</strong> to earn your certificate.</li>
-            </ul>
+        <h1>Energy Flow Activity</h1>
+        <p>In this activity, you will explore how energy and biomass move through Ohio's ecosystems. You must complete each section to move forward.</p>
+        <div style="background: #fff3e0; padding: 20px; border-left: 5px solid #ff9800;">
+            <strong>Instructions:</strong> Read all info, watch the required video, and pass the activities. You need a <b>70% or higher</b> on the final quiz to receive your certificate.
         </div>
-        <button class="btn" onclick="completeStep('intro', 'section1')">Begin Section 1: Trophic Levels</button>
+        <button class="btn" onclick="completeStep('intro', 's1')">Start Activity</button>
     </div>
 
-    <div id="page-section1" class="content-card hidden">
-        <h2>Food Chains vs. Food Webs</h2>
-        <p>A <strong>Food Chain</strong> follows a single path as animals eat each other (e.g., Grass → Rabbit → Fox). A <strong>Food Web</strong> shows how multiple food chains overlap, representing the true complexity of an Ohio forest or pond.</p>
-        
-        <div class="image-container">
-            <img src="1.jpg" alt="Food Chain Diagram" style="max-width: 100%; border-radius: 10px;">
+    <div id="page-s1" class="content-card hidden">
+        <h2>Section 1: Trophic Levels</h2>
+        <p>A <b>Food Chain</b> shows a single path of energy. A <b>Food Web</b> is a complex map of many overlapping chains.</p>
+        <img src="5.jpg" class="img-fluid" alt="Food Chain Example">
+        <p>In this Ohio example: <b>Carrot (Producer) → Rabbit (Primary) → Fox (Secondary) → Lion (Tertiary)</b>.</p>
+        <h3>Interactive Practice</h3>
+        <p>Look at the <b>Food Web</b> image below:</p>
+        <img src="4.jpg" class="img-fluid" alt="Food Web">
+        <div id="s1-practice-area">
+            <p>1. Name ONE Producer shown in the green grass at the bottom: <input type="text" id="s1-q1"></p>
+            <p>2. The Owl is eating a snake. What consumer level is the Owl here? 
+                <select id="s1-q2">
+                    <option value="">Select...</option>
+                    <option value="tertiary">Tertiary Consumer</option>
+                    <option value="primary">Primary Consumer</option>
+                </select>
+            </p>
+            <div id="s1-feedback" class="feedback-box"></div>
+            <button class="btn" onclick="checkS1()">Verify Answers</button>
         </div>
+    </div>
 
-        <h3>The Trophic Levels:</h3>
+    <div id="page-s2" class="content-card hidden">
+        <h2>Section 2: The 10% Rule</h2>
+        <p>Ecological pyramids show how energy and biomass decrease as you go up. Only <b>10%</b> of energy moves to the next level.</p>
+        <img src="1.jpg" class="img-fluid" alt="Energy Pyramid">
+        <p><b>Pyramid Types:</b></p>
         <ul>
-            <li><strong>Producers (Autotrophs):</strong> Level 1. Capture solar energy (e.g., Algae, Corn).</li>
-            <li><strong>Primary Consumers:</strong> Level 2. Herbivores that eat producers (e.g., Grasshopper).</li>
-            <li><strong>Secondary Consumers:</strong> Level 3. Carnivores eating herbivores (e.g., Bluegill Fish).</li>
-            <li><strong>Tertiary/Quaternary:</strong> Levels 4+. Apex predators (e.g., Osprey).</li>
+            <li><b>Energy:</b> Always upright. Shows joules/calories.</li>
+            <li><b>Biomass:</b> Total mass of organisms at a level. Usually upright.</li>
+            <li><b>Numbers:</b> Can be inverted (e.g., many insects on one Ohio Oak tree).</li>
         </ul>
-        <button class="btn" onclick="showSubpage('section1-practice')">Try It Yourself →</button>
-    </div>
-
-    <div id="page-section1-practice" class="content-card hidden">
-        <h2>Practice: Ohio Food Web Analysis</h2>
-        <p>Look at the following food chain: <strong>Soybeans → White-tailed Deer → Coyote</strong></p>
+        <hr>
+        <h3>Required Video</h3>
+        <div id="player"></div>
+        <div id="video-msg" style="color: var(--error); margin-top: 10px;">Watch the full video to unlock the Biomass Practice.</div>
         
-        <label>What is the Trophic Level (1-3) of the Coyote?</label><br>
-        <input type="number" id="practice-1-val" style="width: 50px; margin: 10px 0;"><br>
-        
-        <label>What title describes the Deer?</label><br>
-        <select id="practice-1-title">
-            <option value="">Select...</option>
-            <option value="prod">Producer</option>
-            <option value="pc">Primary Consumer</option>
-            <option value="sc">Secondary Consumer</option>
-        </select>
-        
-        <div id="practice-1-feedback" class="feedback"></div>
-        <button class="btn" onclick="validatePractice1()">Check Answers</button>
-    </div>
-
-    <div id="page-section2" class="content-card hidden">
-        <h2>The 10% Rule & Biomass</h2>
-        <p>In ecology, a <strong>Pyramid of Energy</strong> is always upright. Why? Because only 10% of energy is transferred. The rest is lost as heat!</p>
-        <p><strong>Biomass:</strong> The total mass of all organisms in a trophic level. Like energy, biomass typically decreases as you move up the pyramid.</p>
-        
-        <div class="image-container">
-            <img src="4.jpg" alt="Energy Pyramid" style="max-width: 100%;">
+        <div id="s2-practice" class="hidden">
+            <h3>Biomass Practice</h3>
+            <img src="3.jpg" class="img-fluid" alt="Biomass Pyramid">
+            <p>1. If the <b>Producers</b> have 50,000 kg of biomass, how much reaches the <b>Secondary Consumers</b>? <input type="number" id="s2-q1"> kg</p>
+            <p>2. If the <b>Quaternary Consumer</b> has 2 kg, how much was at the <b>Producer</b> level? <input type="number" id="s2-q2"> kg</p>
+            <div id="s2-feedback" class="feedback-box"></div>
+            <button class="btn" onclick="checkS2()">Check Biomass</button>
         </div>
-
-        <h3>Educational Video</h3>
-        <p>Watch the video below to unlock the practice section.</p>
-        <div id="player"></div> <div id="video-status" style="margin-top:10px; color: var(--error);">Watch full video to continue...</div>
-        <button id="energy-next-btn" class="btn" disabled onclick="showSubpage('section2-practice')">Continue to Practice</button>
-    </div>
-
-    <div id="page-section2-practice" class="content-card hidden">
-        <h2>Biomass Calculations</h2>
-        <p>Calculate the missing biomass based on the 10% rule.</p>
-        <div id="biomass-scenarios">
-            <p>1. If Producers have <strong>12,000 kg</strong> of biomass, how much is at the Secondary level? <input type="number" id="bio-1"> kg</p>
-            <p>2. If Tertiary Consumers have <strong>5 kg</strong>, how much was at the Producer level? <input type="number" id="bio-2"> kg</p>
-        </div>
-        <div id="practice-2-feedback" class="feedback"></div>
-        <button class="btn" onclick="validatePractice2()">Check Calculation</button>
     </div>
 
     <div id="page-quiz" class="content-card hidden">
-        <h2 id="quiz-header">Mastery Quiz: Question 1</h2>
-        <div id="quiz-body">
-            </div>
-        <div id="quiz-feedback" class="feedback"></div>
+        <div id="quiz-intro">
+            <h2>Mastery Quiz</h2>
+            <p>You need at least 7/10 to pass. Answer one question at a time.</p>
+            <button class="btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+        <div id="quiz-game" class="hidden">
+            <h3 id="q-text"></h3>
+            <div id="q-options"></div>
+            <div id="quiz-warn" class="feedback-box wrong"></div>
+        </div>
     </div>
 
     <div id="page-cert" class="content-card hidden">
         <div id="certificate">
-            <h1 style="font-size: 3rem; margin: 0;">CERTIFICATE</h1>
-            <p>OF COMPLETION</p>
-            <p>This is to certify that</p>
-            <h2 id="cert-display-name">STUDENT NAME</h2>
-            <p>Successfully completed the <strong>Ecology Energy Flow Activity</strong></p>
-            <p>Final Score: <span id="cert-score"></span>/10</p>
-            <p style="font-size: 0.8rem; margin-top: 20px;">Date: <span id="cert-date"></span></p>
+            <h1>Certificate of Mastery</h1>
+            <p>This certifies that</p>
+            <h2 id="cert-name" style="border-bottom: 2px solid #333; display: inline-block; min-width: 250px;">Name</h2>
+            <p>has mastered <b>Ecology & Energy Flow</b></p>
+            <p>Score: <span id="cert-score">0</span>/10</p>
         </div>
-        <p style="text-align: center; margin-top: 20px;"><strong>Instruction:</strong> Screenshot this page and submit to Canvas.</p>
+        <p style="text-align:center;">Screenshot this and submit to Canvas!</p>
     </div>
 </div>
 
 <script>
-    // Progress State
-    let state = { intro: true, section1: false, section2: false, quiz: false };
-    let quizData = [
-        { q: "Which Ohio organism is a Producer?", a: "Switchgrass", o: ["Switchgrass", "Garter Snake", "Coyote", "Red Squirrel"] },
-        { q: "If Producers have 10,000 J of energy, how much does the Primary Consumer get?", a: "1,000 J", o: ["10,000 J", "1,000 J", "100 J", "10 J"] },
-        // ... Add more questions to reach 10 ...
-    ];
-    let currentQuizIdx = 0;
+    let state = { intro: true, s1: false, s2: false, quiz: false };
     let score = 0;
+    let curQ = 0;
 
-    // Navigation
+    const quizData = [
+        {q: "Which organism is an Autotroph?", a: "Corn", o: ["Corn", "Rabbit", "Fox", "Snake"]},
+        {q: "Only ____% of energy is passed to the next level.", a: "10", o: ["1", "10", "50", "90"]},
+        {q: "If Producers have 1000kcal, how much do Primary Consumers get?", a: "100kcal", o: ["1000", "100", "10", "1"]},
+        {q: "A pyramid of energy is always...", a: "Upright", o: ["Upright", "Inverted", "Spindle-shaped", "Circle"]},
+        {q: "Total mass of organisms at a level is called:", a: "Biomass", o: ["Biodiversity", "Biomass", "Bio-energy", "Bio-math"]},
+        {q: "An Ohio Coyote eating a rabbit is a:", a: "Secondary Consumer", o: ["Producer", "Primary Consumer", "Secondary Consumer", "Decomposer"]},
+        {q: "Which level has the MOST energy?", a: "Producers", o: ["Producers", "Primary Consumers", "Tertiary Consumers", "Decomposers"]},
+        {q: "Working backwards: If Secondary has 10kg, Producers had...", a: "1000kg", o: ["1kg", "100kg", "1000kg", "10,000kg"]},
+        {q: "What returns nutrients to the soil?", a: "Decomposers", o: ["Producers", "Consumers", "Decomposers", "Sun"]},
+        {q: "A food web is more realistic than a food chain.", a: "True", o: ["True", "False"]}
+    ];
+
     function navigate(id) {
         if (!state[id]) return;
-        document.querySelectorAll('.content-card').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.content-card').forEach(c => c.classList.add('hidden'));
         document.getElementById('page-' + id).classList.remove('hidden');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.getElementById('nav-' + id).classList.add('active');
     }
 
-    function showSubpage(id) {
-        document.querySelectorAll('.content-card').forEach(p => p.classList.add('hidden'));
-        document.getElementById('page-' + id).classList.remove('hidden');
+    function completeStep(curr, next) {
+        document.getElementById('nav-' + curr).classList.add('completed');
+        state[next] = true;
+        document.getElementById('nav-' + next).classList.remove('locked');
+        navigate(next);
     }
 
-    function completeStep(currentId, nextId) {
-        document.getElementById('nav-' + currentId).classList.add('completed');
-        state[nextId] = true;
-        document.getElementById('nav-' + nextId).classList.remove('locked');
-        navigate(nextId);
-    }
-
-    // Section 1 Validation
-    function validatePractice1() {
-        const val = document.getElementById('practice-1-val').value;
-        const title = document.getElementById('practice-1-title').value;
-        const fb = document.getElementById('practice-1-feedback');
-
-        if (val == "3" && title == "pc") {
-            fb.className = "feedback correct";
-            fb.innerText = "Excellent! Soybeans(1) -> Deer(2) -> Coyote(3). The Deer is a Primary Consumer.";
-            setTimeout(() => completeStep('section1', 'section2'), 2000);
+    function checkS1() {
+        const q1 = document.getElementById('s1-q1').value.toLowerCase();
+        const q2 = document.getElementById('s1-q2').value;
+        const fb = document.getElementById('s1-feedback');
+        if ((q1.includes('grass') || q1.includes('algae') || q1.includes('producer')) && q2 === 'tertiary') {
+            fb.innerHTML = "Correct! Moving to Section 2..."; fb.className = "feedback-box correct";
+            setTimeout(() => completeStep('s1', 's2'), 1500);
         } else {
-            fb.className = "feedback wrong";
-            fb.innerText = "Not quite. Remember Producers are Level 1.";
+            fb.innerHTML = "Incorrect. Check the labels on image 4.jpg and try again."; fb.className = "feedback-box wrong";
         }
     }
 
-    // Section 2 Validation
-    function validatePractice2() {
-        const b1 = document.getElementById('bio-1').value;
-        const b2 = document.getElementById('bio-2').value;
-        const fb = document.getElementById('practice-2-feedback');
-
-        if (b1 == "120" && b2 == "5000") {
-            fb.className = "feedback correct";
-            fb.innerText = "Math Master! 10% rules confirmed.";
-            setTimeout(() => completeStep('section2', 'quiz'), 2000);
-            startQuiz();
-        } else {
-            fb.className = "feedback wrong";
-            fb.innerText = "Check your zeros! Moving up = divide by 10. Moving down = multiply by 10.";
-        }
-    }
-
-    // YouTube API Logic
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // Video Logic
+    var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     var player;
     function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-            height: '360', width: '100%', videoId: '0glkXIj1DgE',
-            events: { 'onStateChange': onPlayerStateChange }
+        player = new YT.Player('player', { height: '360', width: '100%', videoId: '0glkXIj1DgE',
+            events: { 'onStateChange': e => { if(e.data === 0) { 
+                document.getElementById('s2-practice').classList.remove('hidden'); 
+                document.getElementById('video-msg').style.display='none'; 
+            }} }
         });
     }
-    function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.ENDED) {
-            document.getElementById('energy-next-btn').disabled = false;
-            document.getElementById('video-status').innerText = "Video Complete! You may proceed.";
-            document.getElementById('video-status').style.color = "green";
+
+    function checkS2() {
+        const q1 = document.getElementById('s2-q1').value;
+        const q2 = document.getElementById('s2-q2').value;
+        const fb = document.getElementById('s2-feedback');
+        if (q1 == 500 && q2 == 20000) {
+            fb.innerHTML = "Perfect! You've unlocked the quiz."; fb.className = "feedback-box correct";
+            setTimeout(() => completeStep('s2', 'quiz'), 1500);
+        } else {
+            fb.innerHTML = "Math Check: 50,000 -> 5,000 -> 500. For #2, go up 4 levels (multiply by 10 four times)."; fb.className = "feedback-box wrong";
         }
     }
 
-    // Quiz Logic
     function startQuiz() {
-        renderQuestion();
+        document.getElementById('quiz-intro').classList.add('hidden');
+        document.getElementById('quiz-game').classList.remove('hidden');
+        showQ();
     }
 
-    function renderQuestion() {
-        const q = quizData[currentQuizIdx];
-        let html = `<h3>${q.q}</h3>`;
-        q.o.forEach(opt => {
-            html += `<div class="quiz-option" onclick="checkQuizAnswer('${opt}')">${opt}</div>`;
-        });
-        document.getElementById('quiz-body').innerHTML = html;
-        document.getElementById('quiz-header').innerText = `Mastery Quiz: Question ${currentQuizIdx + 1}/10`;
+    function showQ() {
+        const q = quizData[curQ];
+        document.getElementById('q-text').innerText = `Question ${curQ+1}: ${q.q}`;
+        let h = "";
+        q.o.forEach(opt => h += `<div class="quiz-option" onclick="ans('${opt}')">${opt}</div>`);
+        document.getElementById('q-options').innerHTML = h;
     }
 
-    function checkQuizAnswer(choice) {
-        if (choice === quizData[currentQuizIdx].a) score++;
-        currentQuizIdx++;
-        if (currentQuizIdx < quizData.length) {
-            renderQuestion();
-        } else {
-            finishQuiz();
-        }
-    }
-
-    function finishQuiz() {
-        if (score >= 7) {
-            const name = prompt("You passed! Enter your name for the certificate:");
-            document.getElementById('cert-display-name').innerText = name || "Student";
-            document.getElementById('cert-score').innerText = score;
-            document.getElementById('cert-date').innerText = new Date().toLocaleDateString();
-            showSubpage('cert');
-            document.getElementById('nav-quiz').classList.add('completed');
-        } else {
-            alert(`Score: ${score}/10. You need 7 to pass. Restarting quiz...`);
-            currentQuizIdx = 0; score = 0; renderQuestion();
+    function ans(choice) {
+        if (choice === quizData[curQ].a) score++;
+        curQ++;
+        if (curQ < quizData.length) showQ();
+        else {
+            if (score >= 7) {
+                const n = prompt("Enter your name for the certificate:");
+                document.getElementById('cert-name').innerText = n || "Student";
+                document.getElementById('cert-score').innerText = score;
+                navigate('cert');
+            } else {
+                document.getElementById('quiz-warn').innerText = `You scored ${score}/10. You need 7/10. Quiz restarting...`;
+                document.getElementById('quiz-warn').style.display = 'block';
+                setTimeout(() => { curQ=0; score=0; startQuiz(); document.getElementById('quiz-warn').style.display='none'; }, 3000);
+            }
         }
     }
 </script>
