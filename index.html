@@ -21,13 +21,13 @@
         .completed .check-mark { display: inline; }
 
         /* Images and Section 2 Tight Spacing */
-        .s1-img { width: 50%; display: block; margin: 15px auto; border-radius: 8px; }
-        .s2-img { width: 80%; display: block; margin: 5px auto; border-radius: 8px; }
-        #page-s2 p { margin-bottom: 8px; }
+        .s1-img { width: 50%; display: block; margin: 5px auto; border-radius: 8px; }
+        .s2-img { width: 80%; display: block; margin: 2px auto; border-radius: 8px; }
+        #page-s1 p, #page-s1 h2, #page-s1 h3, #page-s2 p, #page-s2 h2 { margin-bottom: 6px; margin-top: 2px; }
 
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 20px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 15px; }
         
-        .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 15px 0; width: 100%; }
+        .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 10px 0; width: 100%; }
         .tier { border: 2px solid #333; margin: 2px; padding: 10px; font-weight: bold; text-align: center; color: #000; }
         .tier span { display: block; font-size: 0.8rem; margin-bottom: 5px; color: #333; }
         .t4 { background: #ff7675; width: 45%; } .t3 { background: #fab1a0; width: 65%; }
@@ -38,7 +38,7 @@
         .wrong { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
         
         input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 20px; padding-top: 10px; }
+        #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 15px; padding-top: 10px; }
 
         /* 50% Smaller Certificate */
         #cert-wrap { width: 55%; margin: 0 auto; }
@@ -94,9 +94,9 @@
 
     <div id="page-s2" class="card hidden">
         <h2>Pyramid of Energy</h2>
-        <p>Energy flows through the food chain from one trophic level to the next. However, only about 10 percent of the total energy stored in organisms at one trophic level is actually transferred to organisms at the next trophic level. The rest of the energy is used for metabolic processes or lost to the environment as heat.</p>
+        <p>Energy flows through the food chain from one trophic level to the next. However, only about 10 percent of the total energy stored in organisms at one trophic level is actually transferred to organisms at the next trophic level. The rest of the energy is used for metabolic processes or lost to the environment as heat. As a result, less energy is available to organisms at each successive trophic level. This explains why there are rarely more than five trophic levels in a food chain. The amount of energy at different trophic levels can be represented by an energy pyramid like the one in the Figure below. The materials in dead organisms and wastes at all trophic levels are broken down by decomposers. Organisms such as detritivores return needed elements to the ecosystem and use up most remaining energy. Because of the reduction in energy at each trophic level, virtually no energy remains. Therefore, energy must be continuously added to ecosystems by producers. Pyramid of Energy is always upright.</p>
         <img src="3.jpg" class="s2-img">
-        <p>Because of the reduction in energy at each trophic level, virtually no energy remains. Therefore, energy must be continuously added to ecosystems by producers. Pyramid of Energy is always upright.</p>
+        <p>The 10% Rule is a fundamental concept in ecology. It states that only about 10% of the energy from one trophic level is passed on to the next. The remaining 90% is lost as heat or used for metabolic processes by the organism itself. In this simulation, we'll start with a large amount of solar energy captured by producers and see how little energy makes it to the top of the food chain.</p>
         <img src="1.jpg" class="s2-img">
         <p id="citation">Source: CK-12 Foundation. (2024). Pyramid of Energy.</p>
         <div style="text-align: center;"><button class="btn" onclick="showSub('s2-practice')">Let's Practice!</button></div>
@@ -182,6 +182,7 @@
         const fb = document.getElementById('s2-fb');
         if (v1 == 10000 && v2 == 1000 && v3 == 100 && v4 == 10) {
             fb.innerText = "Correct!"; fb.className = "feedback-box correct";
+            document.getElementById('nav-s2').classList.add('completed'); // Fix check mark
             setTimeout(() => { state.quiz = true; startQuiz(); navigate('quiz'); }, 1500);
         } else { fb.innerText = "Incorrect Math."; fb.className = "feedback-box wrong"; }
     }
@@ -210,22 +211,28 @@
     const section1Bank = [
         { type: 'multi', q: "Which diagram shows many interconnected pathways of energy?", a: "Food Web", o: ["Food Chain", "Food Web", "Energy Pyramid", "Sun Map"] },
         { type: 'multi', q: "An organism that eats only plants is a:", a: "Primary Consumer", o: ["Producer", "Primary Consumer", "Secondary Consumer", "Decomposer"] },
-        { type: 'multi', q: "Energy ________ as it moves up trophic levels.", a: "Decreases", o: ["Increases", "Decreases", "Stays the same", "Disappears"] }
+        { type: 'multi', q: "Energy ________ as it moves up trophic levels.", a: "Decreases", o: ["Increases", "Decreases", "Stays the same", "Disappears"] },
+        { type: 'multi', q: "Matter _______ through an ecosystem.", a: "Cycles", o: ["Cycles", "Flows", "Disappears", "Stops"] },
+        { type: 'multi', q: "Organisms that break down dead matter are:", a: "Decomposers", o: ["Producers", "Decomposers", "Primary Consumers", "Apex Predators"] }
     ];
 
     const pyramidBank = [
         { type: 'pyramid', levels: 4, startVal: 5000, startLevel: 'Producer', a: [5, 50, 500, 5000] },
-        { type: 'pyramid', levels: 3, startVal: 100, startLevel: 'Secondary Consumer', a: [100, 1000, 10000] }
+        { type: 'pyramid', levels: 3, startVal: 100, startLevel: 'Secondary Consumer', a: [100, 1000, 10000] },
+        { type: 'pyramid', levels: 4, startVal: 10, startLevel: 'Tertiary Consumer', a: [10, 100, 1000, 10000] },
+        { type: 'pyramid', levels: 3, startVal: 400, startLevel: 'Primary Consumer', a: [40, 400, 4000] },
+        { type: 'pyramid', levels: 4, startVal: 8000, startLevel: 'Producer', a: [8, 80, 800, 8000] }
     ];
 
     function startQuiz() {
-        randomizedQuestions = [...section1Bank, ...pyramidBank].sort(() => 0.5 - Math.random()).slice(0,10);
+        randomizedQuestions = [...section1Bank, ...pyramidBank].sort(() => 0.5 - Math.random());
         curQ = 0; score = 0; showQuestion();
     }
 
     function showQuestion() {
         const q = randomizedQuestions[curQ];
         const area = document.getElementById('quiz-area');
+        document.getElementById('quiz-header').innerText = `Question ${curQ + 1} of 10`;
         document.getElementById('quiz-fb').style.display = 'none';
         document.getElementById('quiz-next').style.display = 'none';
         if (q.type === 'multi') {
@@ -244,43 +251,45 @@
     function ans(choice) {
         const q = randomizedQuestions[curQ];
         const fb = document.getElementById('quiz-fb');
-        const nextBtn = document.getElementById('quiz-next');
         fb.style.display = 'block';
         if (choice === q.a) { 
             fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
-            nextBtn.innerText = "Next Question"; score++;
+            score++;
+            setTimeout(nextQuestion, 1200); // Auto-advance on correct
         } else { 
             fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; 
-            nextBtn.innerText = "Try Again";
+            document.getElementById('quiz-next').innerText = "Try Again";
+            document.getElementById('quiz-next').style.display = 'inline-block';
         }
-        nextBtn.style.display = 'inline-block';
     }
 
     function ansPyramid() {
         const q = randomizedQuestions[curQ];
         const fb = document.getElementById('quiz-fb');
-        const nextBtn = document.getElementById('quiz-next');
         fb.style.display = 'block';
         let correct = true;
-        for (let i = 0; i < q.levels; i++) if (document.getElementById(`qval-${i}`).value != q.a[i]) correct = false;
+        for (let i = 0; i < q.levels; i++) {
+            if (document.getElementById(`qval-${i}`).value != q.a[i]) correct = false;
+        }
         if (correct) { 
             fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
-            nextBtn.innerText = "Next Question"; score++;
+            score++;
+            setTimeout(nextQuestion, 1200); // Auto-advance on correct
         } else { 
             fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; 
-            nextBtn.innerText = "Try Again";
+            document.getElementById('quiz-next').innerText = "Try Again";
+            document.getElementById('quiz-next').style.display = 'inline-block';
         }
-        nextBtn.style.display = 'inline-block';
     }
 
     function nextQuestion() {
-        if (document.getElementById('quiz-next').innerText === "Try Again") {
+        if (document.getElementById('quiz-fb').innerText === "Incorrect!") {
             showQuestion();
         } else {
             curQ++;
-            if (curQ < randomizedQuestions.length) showQuestion();
+            if (curQ < 10) showQuestion();
             else {
-                document.getElementById('display-score').innerText = (score/randomizedQuestions.length * 100) + "%";
+                document.getElementById('display-score').innerText = (score/10 * 100) + "%";
                 document.getElementById('display-date').innerText = new Date().toLocaleDateString();
                 showSub('cert');
             }
