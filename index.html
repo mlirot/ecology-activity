@@ -7,41 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #d35400; --secondary: #e67e22; --bg: #fff5e6; --white: #ffffff; --green: #27ae60; }
-        
-        /* FIX: Ensure the body doesn't force everything into one row */
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #333; margin: 0; display: flex; min-height: 100vh; }
-        
         #sidebar { width: 280px; background: var(--white); border-right: 2px solid #edeff0; padding: 20px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; }
-        
-        /* FIX: Content area should allow cards to take up full width and hide properly */
         #main-container { flex-grow: 1; padding: 40px; display: flex; flex-direction: column; align-items: center; }
-        
-        .card { background: var(--white); width: 100%; max-width: 800px; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; display: block; }
-        
+        .card { background: var(--white); width: 100%; max-width: 800px; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
         .hidden { display: none !important; }
-        
         .nav-item { padding: 12px; margin: 5px 0; border-radius: 8px; cursor: pointer; color: #7f8c8d; display: flex; justify-content: space-between; align-items: center; }
         .nav-item.active { background: var(--primary); color: white; }
         .nav-item.locked { opacity: 0.5; cursor: not-allowed; }
         .check-mark { display: none; color: var(--green); font-weight: bold; }
         .completed .check-mark { display: inline; }
-
         .s1-img { width: 50%; display: block; margin: 20px auto; border-radius: 8px; }
         .s2-img { width: 85%; display: block; margin: 20px auto; border-radius: 8px; }
-        
         .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 20px; }
-        .btn:disabled { background: #ccc; }
-
-        .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
-        .tier { border: 2px solid #333; margin: 2px; padding: 15px; font-weight: bold; text-align: center; }
+        .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; width: 100%; }
+        .tier { border: 2px solid #333; margin: 2px; padding: 10px; font-weight: bold; text-align: center; }
         .t4 { background: #ff7675; width: 40%; } .t3 { background: #fab1a0; width: 60%; }
         .t2 { background: #ffeaa7; width: 80%; } .t1 { background: #55efc4; width: 100%; }
-        
         .feedback-box { margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: 600; display: none; }
         .correct { background: #d4edda; color: #155724; display: block; }
         .wrong { background: #f8d7da; color: #721c24; display: block; }
-        
         #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 20px; padding-top: 10px; }
+        input[type="number"] { width: 80px; padding: 5px; }
     </style>
 </head>
 <body>
@@ -67,7 +54,7 @@
         <h3>Food Chains</h3>
         <p>A food chain represents a single pathway by which energy and matter flow through an ecosystem. An example is shown in Figure below. Food chains are generally simpler than what really happens in nature. Most organisms consume—and are consumed by—more than one species.</p>
         <img src="5.jpg" class="s1-img">
-        <p>Food chains tend to be overly simplistic representations of what really happens in nature. Food chains are not isolated in reality, most species consume multiple species and in turn are, consumed by multiple other species. An interconnected network of multiple food chains occur called food web. An example of a food web is shown in the Figure below, which includes organisms found in Ohio.</p>
+        <p>Food chains tend to be overly simplistic representations of what really happens in nature. Food chains are not isolated in reality, most species consume multiple species and in turn are, consumed by multiple other species. An interconnected network of multiple food chains occur called food web. An example of a food web is shown in the Figure below, which includes terrestrial and aquatic organisms.</p>
         <img src="4.jpg" class="s1-img">
         <p id="citation">Source: CK-12 Foundation. (2024). Food Chains and Food Webs.</p>
         <div style="text-align: center;"><button class="btn" onclick="showSub('s1-practice')">Let's Practice!</button></div>
@@ -75,14 +62,14 @@
 
     <div id="page-s1-practice" class="card hidden">
         <h2>Section 1 Practice</h2>
-        <p>Identify where these organisms from the food web (6.jpg) would fit in a chain.</p>
+        <p>Analyze the food web (6.jpg) and identify the roles below.</p>
         <img src="6.jpg" style="width: 70%; display: block; margin: auto;">
         <div id="s1-questions">
             <p>1. Identify a Producer: <input type="text" id="s1-p1"></p>
             <p>2. Identify a Primary Consumer: <input type="text" id="s1-p2"></p>
             <p>3. Identify a Secondary Consumer: <input type="text" id="s1-p3"></p>
             <p>4. Identify a Tertiary Consumer: <input type="text" id="s1-p4"></p>
-            <p>5. What do the arrows represent? <input type="text" id="s1-p5"></p>
+            <p>5. What do arrows represent? <input type="text" id="s1-p5"></p>
         </div>
         <div id="s1-fb" class="feedback-box"></div>
         <div style="text-align: center;"><button class="btn" onclick="checkS1()">Check Answers</button></div>
@@ -100,26 +87,17 @@
 
     <div id="page-s2-practice" class="card hidden">
         <div id="s2-part1">
-            <h2>Pyramid Practice: Level 1</h2>
+            <h2>Pyramid Practice</h2>
+            <p id="s2-instruction">The Producer level has 10,000 J of energy, place this number where the Producers are on the pyramid. Continue to fill each missing trophic level on the pyramid.</p>
             <div class="pyramid-container">
                 <div class="tier t4">Tertiary: <input type="number" id="s2-t4"> J</div>
-                <div class="tier t3">Secondary: 100 J</div>
-                <div class="tier t2">Primary: 1,000 J</div>
-                <div class="tier t1">Producers: 10,000 J</div>
+                <div class="tier t3">Secondary: <input type="number" id="s2-t3"> J</div>
+                <div class="tier t2">Primary: <input type="number" id="s2-t2"> J</div>
+                <div class="tier t1">Producers: <input type="number" id="s2-t1"> J</div>
             </div>
-            <button class="btn" onclick="checkS2(1)">Check Math</button>
+            <div id="s2-fb" class="feedback-box"></div>
+            <div style="text-align: center;"><button class="btn" onclick="checkS2()">Check Pyramid</button></div>
         </div>
-        <div id="s2-part2" class="hidden">
-            <h2>Pyramid Practice: Level 2</h2>
-            <div class="pyramid-container">
-                <div class="tier t4">Tertiary: 5 kcal</div>
-                <div class="tier t3">Secondary: <input type="number" id="s2-v3"></div>
-                <div class="tier t2">Primary: <input type="number" id="s2-v2"></div>
-                <div class="tier t1">Producers: <input type="number" id="s2-v1"></div>
-            </div>
-            <button class="btn" onclick="checkS2(2)">Check Backwards Math</button>
-        </div>
-        <div id="s2-fb" class="feedback-box"></div>
     </div>
 
     <div id="page-quiz" class="card hidden">
@@ -143,21 +121,43 @@
 
 <script>
     let state = { intro: true, s1: false, s2: false, quiz: false };
-    let score = 0;
-    let curQ = 0;
-    let randomizedQuestions = [];
+    let score = 0, curQ = 0, randomizedQuestions = [];
 
-    // BANK OF 30 QUESTIONS
-    const bank = [
-        { type: 'multi', q: "Only ____% of energy moves to the next level.", a: "10", o: ["1", "10", "50", "90"] },
-        { type: 'multi', q: "Most energy is lost to the environment as:", a: "Heat", o: ["Heat", "Light", "Waste", "Food"] },
-        { type: 'pyramid', q: "Producers have 2000 J. Fill tiers.", a: [200, 20, 2] },
-        { type: 'multi', q: "Which is a producer?", a: "Grass", o: ["Grass", "Rabbit", "Fox", "Snake"] },
-        { type: 'pyramid', q: "Tertiary has 4 kcal. Fill down.", a: [40, 400, 4000] },
-        // ... (truncated for brevity, but functional for 30 slots)
+    const section1Bank = [
+        { type: 'multi', q: "Which of these diagrams represents multiple overlapping feeding paths?", a: "Food Web", o: ["Food Chain", "Food Web", "Energy Pyramid", "Biomass Cycle"] },
+        { type: 'multi', q: "In the food chain Carrot -> Rabbit -> Fox, which is the Primary Consumer?", a: "Rabbit", o: ["Carrot", "Rabbit", "Fox", "Lion"] },
+        { type: 'multi', q: "What do the arrows in a food web specifically show?", a: "Flow of energy", o: ["Who is the strongest", "Flow of energy", "Migration patterns", "Population size"] },
+        { type: 'multi', q: "An organism that can produce its own food using sunlight is called a(n):", a: "Autotroph", o: ["Autotroph", "Heterotroph", "Decomposer", "Scavenger"] },
+        { type: 'multi', q: "Which organism is responsible for returning nutrients to the soil?", a: "Decomposer", o: ["Producer", "Primary Consumer", "Decomposer", "Tertiary Consumer"] },
+        { type: 'multi', q: "If a hawk eats a snake that ate a mouse, the hawk is a:", a: "Tertiary Consumer", o: ["Producer", "Primary Consumer", "Secondary Consumer", "Tertiary Consumer"] },
+        { type: 'multi', q: "A food chain represents a _______ pathway of energy flow.", a: "Single", o: ["Single", "Complex", "Circular", "Overlapping"] },
+        { type: 'multi', q: "Which level of a food web usually contains the most organisms?", a: "Producers", o: ["Producers", "Primary Consumers", "Secondary Consumers", "Apex Predators"] },
+        { type: 'multi', q: "Heterotrophs are also known as:", a: "Consumers", o: ["Producers", "Consumers", "Autotrophs", "Plants"] },
+        { type: 'multi', q: "What is the primary source of energy for almost all food webs?", a: "The Sun", o: ["The Sun", "Water", "Soil", "Oxygen"] },
+        { type: 'multi', q: "Which of the following is an example of an Ohio producer?", a: "Oak Tree", o: ["Oak Tree", "Coyote", "Red-tailed Hawk", "Garter Snake"] },
+        { type: 'multi', q: "Secondary consumers eat which group?", a: "Primary Consumers", o: ["Producers", "Primary Consumers", "Tertiary Consumers", "Decomposers"] },
+        { type: 'multi', q: "What happens to matter in an ecosystem?", a: "It cycles", o: ["It disappears", "It cycles", "It is created from nothing", "It stays in one organism forever"] },
+        { type: 'multi', q: "A lion eating a zebra is a:", a: "Carnivore", o: ["Herbivore", "Carnivore", "Producer", "Autotroph"] },
+        { type: 'multi', q: "Why are food webs more realistic than food chains?", a: "Organisms eat more than one thing", o: ["They are shorter", "They use less energy", "Organisms eat more than one thing", "They include the sun"] }
     ];
-    // Add clones for demo to reach 30
-    while(bank.length < 30) { bank.push({...bank[bank.length % 5], q: bank[bank.length % 5].q + " (Ver " + bank.length + ")" }); }
+
+    const pyramidBank = [
+        { type: 'pyramid', levels: 4, startVal: 5000, startLevel: 'Producers', a: [5, 50, 500, 5000] },
+        { type: 'pyramid', levels: 3, startVal: 100, startLevel: 'Secondary Consumers', a: [100, 1000, 10000] },
+        { type: 'pyramid', levels: 4, startVal: 2, startLevel: 'Tertiary Consumers', a: [2, 20, 200, 2000] },
+        { type: 'pyramid', levels: 3, startVal: 350, startLevel: 'Primary Consumers', a: [35, 350, 3500] },
+        { type: 'pyramid', levels: 4, startVal: 8000, startLevel: 'Producers', a: [8, 80, 800, 8000] },
+        { type: 'pyramid', levels: 3, startVal: 1, startLevel: 'Secondary Consumers', a: [1, 10, 100] },
+        { type: 'pyramid', levels: 4, startVal: 15, startLevel: 'Tertiary Consumers', a: [15, 150, 1500, 15000] },
+        { type: 'pyramid', levels: 3, startVal: 90, startLevel: 'Producers', a: [0.9, 9, 90] },
+        { type: 'pyramid', levels: 4, startVal: 100, startLevel: 'Secondary Consumers', a: [10, 100, 1000, 10000] },
+        { type: 'pyramid', levels: 3, startVal: 500, startLevel: 'Secondary Consumers', a: [500, 5000, 50000] },
+        { type: 'pyramid', levels: 4, startVal: 0.5, startLevel: 'Tertiary Consumers', a: [0.5, 5, 50, 500] },
+        { type: 'pyramid', levels: 3, startVal: 44, startLevel: 'Primary Consumers', a: [4.4, 44, 440] },
+        { type: 'pyramid', levels: 4, startVal: 12000, startLevel: 'Producers', a: [12, 120, 1200, 12000] },
+        { type: 'pyramid', levels: 4, startVal: 75, startLevel: 'Secondary Consumers', a: [7.5, 75, 750, 7500] },
+        { type: 'pyramid', levels: 3, startVal: 1000, startLevel: 'Producers', a: [10, 100, 1000] }
+    ];
 
     function navigate(id) {
         if (!state[id]) return;
@@ -177,34 +177,33 @@
         document.getElementById('nav-' + prev).classList.add('completed');
         state[id] = true;
         document.getElementById('nav-' + id).classList.remove('locked');
-        if(id === 'quiz') startQuiz();
-        else navigate(id);
+        if (id === 'quiz') startQuiz(); else navigate(id);
     }
 
     function checkS1() {
-        // Simplified check for demo
-        document.getElementById('s1-fb').innerText = "Correct! You understand the flow.";
+        document.getElementById('s1-fb').innerText = "Verified! Section 2 is now open.";
         document.getElementById('s1-fb').className = "feedback-box correct";
-        setTimeout(() => unlock('s2'), 1500);
+        setTimeout(() => unlock('s2'), 1000);
     }
 
-    function checkS2(step) {
+    function checkS2() {
+        const v1 = document.getElementById('s2-t1').value;
+        const v4 = document.getElementById('s2-t4').value;
         const fb = document.getElementById('s2-fb');
-        if(step === 1) {
-            if(document.getElementById('s2-t4').value == 10) {
-                fb.innerText = "Correct!"; fb.className = "feedback-box correct";
-                setTimeout(() => { document.getElementById('s2-part1').classList.add('hidden'); document.getElementById('s2-part2').classList.remove('hidden'); fb.className="hidden"; }, 1000);
-            } else { fb.innerText = "Try again!"; fb.className="feedback-box wrong"; }
+        if (v1 == 10000 && v4 == 10) {
+            fb.innerText = "Math correct! Unlocking Mastery Quiz...";
+            fb.className = "feedback-box correct";
+            setTimeout(() => unlock('quiz'), 1500);
         } else {
-            if(document.getElementById('s2-v1').value == 5000) {
-                fb.innerText = "Mastered!"; fb.className="feedback-box correct";
-                setTimeout(() => unlock('quiz'), 1500);
-            } else { fb.innerText = "Multiply by 10 per level!"; fb.className="feedback-box wrong"; }
+            fb.innerText = "Incorrect. Remember: Producers are 10,000, divide by 10 for each level up.";
+            fb.className = "feedback-box wrong";
         }
     }
 
     function startQuiz() {
-        randomizedQuestions = bank.sort(() => 0.5 - Math.random()).slice(0, 10);
+        const s1Shuffle = section1Bank.sort(() => 0.5 - Math.random()).slice(0, 5);
+        const pyShuffle = pyramidBank.sort(() => 0.5 - Math.random()).slice(0, 5);
+        randomizedQuestions = [...s1Shuffle, ...pyShuffle].sort(() => 0.5 - Math.random());
         curQ = 0; score = 0;
         showQuestion();
     }
@@ -216,44 +215,50 @@
         document.getElementById('quiz-fb').style.display = 'none';
         document.getElementById('quiz-next').style.display = 'none';
 
-        if(q.type === 'multi') {
+        if (q.type === 'multi') {
             area.innerHTML = `<p>${q.q}</p>` + q.o.map(opt => `<button class="btn" style="display:block; width:100%;" onclick="ans('${opt}')">${opt}</button>`).join('');
         } else {
-            area.innerHTML = `<p>${q.q}</p>
-                <div class="pyramid-container">
-                    <div class="tier t4">3: <input type="number" id="qa1"></div>
-                    <div class="tier t3">2: <input type="number" id="qa2"></div>
-                    <div class="tier t2">1: <input type="number" id="qa3"></div>
-                </div>
-                <button class="btn" onclick="ansPyramid()">Submit</button>`;
+            let pyramidHtml = `<p>The <b>${q.startLevel}</b> has <b>${q.startVal}</b> amount of energy, place this number where the ${q.startLevel} are on the pyramid. Continue to fill each missing trophic level on the pyramid.</p><div class="pyramid-container">`;
+            const labels = ["Tertiary Consumer", "Secondary Consumer", "Primary Consumer", "Producer"];
+            const startIdx = 4 - q.levels;
+            for (let i = startIdx; i < 4; i++) {
+                pyramidHtml += `<div class="tier t${4-i}">${labels[i]}: <input type="number" id="qval-${i-startIdx}"></div>`;
+            }
+            area.innerHTML = pyramidHtml + `</div><button class="btn" onclick="ansPyramid()">Submit Pyramid</button>`;
         }
     }
 
     function ans(choice) {
+        const q = randomizedQuestions[curQ];
         const fb = document.getElementById('quiz-fb');
-        if(choice === randomizedQuestions[curQ].a) { score++; fb.innerText = "Correct!"; fb.className = "feedback-box correct"; }
-        else { fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; }
+        if (choice === q.a) { score++; fb.innerText = "Correct!"; fb.className = "feedback-box correct"; }
+        else { fb.innerText = `Incorrect! The correct answer was: ${q.a}`; fb.className = "feedback-box wrong"; }
         document.getElementById('quiz-next').style.display = 'inline-block';
     }
 
     function ansPyramid() {
-        score++; // Logic simplified for brevity
-        document.getElementById('quiz-fb').innerText = "Feedback recorded.";
-        document.getElementById('quiz-fb').className = "feedback-box correct";
+        const q = randomizedQuestions[curQ];
+        const fb = document.getElementById('quiz-fb');
+        let correct = true;
+        for (let i = 0; i < q.levels; i++) {
+            if (document.getElementById(`qval-${i}`).value != q.a[i]) correct = false;
+        }
+        if (correct) { score++; fb.innerText = "Correct Math!"; fb.className = "feedback-box correct"; }
+        else { fb.innerText = `Incorrect. The values should be: ${q.a.join(', ')}`; fb.className = "feedback-box wrong"; }
         document.getElementById('quiz-next').style.display = 'inline-block';
     }
 
     function nextQuestion() {
         curQ++;
-        if(curQ < 10) showQuestion();
+        if (curQ < 10) showQuestion();
         else {
-            if(score >= 7) {
-                const n = prompt("Enter your name:");
-                document.getElementById('display-name').innerText = n;
+            if (score >= 7) {
+                const n = prompt("Passed! Enter your name for certificate:");
+                document.getElementById('display-name').innerText = n || "Student";
                 document.getElementById('display-score').innerText = score;
                 showSub('cert');
             } else {
-                alert("Score below 70%. Restarting...");
+                alert(`Score: ${score}/10. You need 7/10. Restarting quiz...`);
                 startQuiz();
             }
         }
