@@ -4,31 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecology Energy Flow Activity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Great+Vibes&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #d35400; --secondary: #e67e22; --bg: #fff5e6; --white: #ffffff; --green: #27ae60; }
+        :root { --primary: #d35400; --secondary: #e67e22; --bg: #fff5e6; --white: #ffffff; --green: #27ae60; --gold: #c5a059; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #333; margin: 0; display: flex; min-height: 100vh; }
+        
         #sidebar { width: 280px; background: var(--white); border-right: 2px solid #edeff0; padding: 20px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; }
         #main-container { flex-grow: 1; padding: 40px; display: flex; flex-direction: column; align-items: center; }
         .card { background: var(--white); width: 100%; max-width: 800px; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
         .hidden { display: none !important; }
+
+        /* Nav Styling */
         .nav-item { padding: 12px; margin: 5px 0; border-radius: 8px; cursor: pointer; color: #7f8c8d; display: flex; justify-content: space-between; align-items: center; }
         .nav-item.active { background: var(--primary); color: white; }
         .nav-item.locked { opacity: 0.5; cursor: not-allowed; }
         .check-mark { display: none; color: var(--green); font-weight: bold; }
         .completed .check-mark { display: inline; }
+
+        /* Media */
         .s1-img { width: 50%; display: block; margin: 20px auto; border-radius: 8px; }
         .s2-img { width: 85%; display: block; margin: 20px auto; border-radius: 8px; }
         .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 20px; }
+        
+        /* Pyramid Logic */
         .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; width: 100%; }
         .tier { border: 2px solid #333; margin: 2px; padding: 10px; font-weight: bold; text-align: center; }
         .t4 { background: #ff7675; width: 40%; } .t3 { background: #fab1a0; width: 60%; }
         .t2 { background: #ffeaa7; width: 80%; } .t1 { background: #55efc4; width: 100%; }
+        
         .feedback-box { margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: 600; display: none; }
         .correct { background: #d4edda; color: #155724; display: block; }
         .wrong { background: #f8d7da; color: #721c24; display: block; }
+        
         #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 20px; padding-top: 10px; }
         input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+
+        /* JAZZED UP CERTIFICATE */
+        .cert-border { border: 15px double var(--gold); padding: 50px; background: #fff; position: relative; text-align: center; color: #2c3e50; }
+        .cert-header { font-family: 'Cinzel', serif; font-size: 3rem; margin: 0; color: #1a252f; }
+        .cert-sub { font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 30px; color: var(--gold); font-weight: bold; }
+        .cert-name-input { font-family: 'Great Vibes', cursive; font-size: 2.5rem; border: none; border-bottom: 2px solid #333; text-align: center; width: 80%; outline: none; margin: 20px 0; background: transparent; }
+        .cert-footer { margin-top: 40px; display: flex; justify-content: space-around; align-items: center; }
+        .seal { width: 100px; height: 100px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-family: 'Cinzel'; transform: rotate(-15deg); border: 4px double white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -86,18 +103,16 @@
     </div>
 
     <div id="page-s2-practice" class="card hidden">
-        <div id="s2-part1">
-            <h2>Pyramid Practice</h2>
-            <p>The <b>Producer</b> level has <b>10,000 J</b> of energy, place this number where the Producers are on the pyramid. Continue to fill each missing trophic level on the pyramid.</p>
-            <div class="pyramid-container">
-                <div class="tier t4">Tertiary Consumer: <input type="number" id="s2-t4"> J</div>
-                <div class="tier t3">Secondary Consumer: <input type="number" id="s2-t3"> J</div>
-                <div class="tier t2">Primary Consumer: <input type="number" id="s2-t2"> J</div>
-                <div class="tier t1">Producer: <input type="number" id="s2-t1"> J</div>
-            </div>
-            <div id="s2-fb" class="feedback-box"></div>
-            <div style="text-align: center;"><button class="btn" onclick="checkS2()">Verify Pyramid</button></div>
+        <h2>Pyramid Practice</h2>
+        <p>The <b>Producer</b> level has 10,000 J of energy. Place this number correctly and fill the rest.</p>
+        <div class="pyramid-container">
+            <div class="tier t4">Tertiary Consumer: <input type="number" id="s2-t4"> J</div>
+            <div class="tier t3">Secondary Consumer: <input type="number" id="s2-t3"> J</div>
+            <div class="tier t2">Primary Consumer: <input type="number" id="s2-t2"> J</div>
+            <div class="tier t1">Producer: <input type="number" id="s2-t1"> J</div>
         </div>
+        <div id="s2-fb" class="feedback-box"></div>
+        <div style="text-align: center;"><button class="btn" onclick="checkS2()">Verify Pyramid</button></div>
     </div>
 
     <div id="page-quiz" class="card hidden">
@@ -107,15 +122,21 @@
         <div style="text-align: center;"><button class="btn" id="quiz-next" style="display:none;" onclick="nextQuestion()">Next Question</button></div>
     </div>
 
-    <div id="page-cert" class="card hidden" style="text-align: center;">
-        <div style="border: 10px double var(--primary); padding: 30px;">
-            <h1>CERTIFICATE OF COMPLETION</h1>
+    <div id="page-cert" class="card hidden">
+        <div class="cert-border">
+            <h1 class="cert-header">Certificate of Completion</h1>
+            <p class="cert-sub">MASTERY IN ECOLOGY & ENERGY FLOW</p>
             <p>This certifies that</p>
-            <h2 id="display-name" style="border-bottom: 2px solid #333; display: inline-block; min-width: 200px;"></h2>
-            <p>has mastered Ecology Energy Flow</p>
-            <h3>Final Score: <span id="display-score"></span>/10</h3>
+            <input type="text" class="cert-name-input" placeholder="Click here to type your name">
+            <p>has successfully passed the Energy Flow curriculum with a score of:</p>
+            <h2 id="display-score" style="color: var(--primary); font-size: 2rem;"></h2>
+            <div class="cert-footer">
+                <p>Date: <br><b id="display-date"></b></p>
+                <div class="seal">EXCELLENCE</div>
+                <p>Curriculum: <br><b>CK-12 Biology</b></p>
+            </div>
         </div>
-        <p>Screenshot and upload to Canvas!</p>
+        <p style="text-align: center; margin-top: 20px;">Type your name above, then screenshot this page for your Canvas submission.</p>
     </div>
 </div>
 
@@ -123,7 +144,6 @@
     let state = { intro: true, s1: false, s2: false, quiz: false };
     let score = 0, curQ = 0, randomizedQuestions = [];
 
-    // UNIQUE DATA BANKS
     const section1Bank = [
         { type: 'multi', q: "Which diagram shows many interconnected pathways of energy?", a: "Food Web", o: ["Food Chain", "Food Web", "Energy Pyramid", "Sun Map"] },
         { type: 'multi', q: "An organism that eats only plants is a:", a: "Primary Consumer", o: ["Producer", "Primary Consumer", "Secondary Consumer", "Decomposer"] },
@@ -186,10 +206,6 @@
         const v4 = document.getElementById('s2-t4').value;
         const fb = document.getElementById('s2-fb');
 
-        if (!v1 || !v2 || !v3 || !v4) {
-            fb.innerText = "Fill all tiers!"; fb.className = "feedback-box wrong"; return;
-        }
-
         if (v1 == 10000 && v2 == 1000 && v3 == 100 && v4 == 10) {
             fb.innerText = "Correct! Launching Mastery Quiz...";
             fb.className = "feedback-box correct";
@@ -216,73 +232,4 @@
     function showQuestion() {
         const q = randomizedQuestions[curQ];
         const area = document.getElementById('quiz-area');
-        document.getElementById('quiz-header').innerText = `Question ${curQ + 1} of 10`;
-        document.getElementById('quiz-fb').style.display = 'none';
-        document.getElementById('quiz-next').style.display = 'none';
-
-        if (q.type === 'multi') {
-            area.innerHTML = `<p>${q.q}</p>` + q.o.map(opt => `<button class="btn" style="display:block; width:100%;" onclick="ans('${opt}')">${opt}</button>`).join('');
-        } else {
-            let pyramidHtml = `<p>The <b>${q.startLevel}</b> has <b>${q.startVal}</b> energy. Place this number correctly and fill the missing levels.</p><div class="pyramid-container">`;
-            const labels = ["Tertiary Consumer", "Secondary Consumer", "Primary Consumer", "Producer"];
-            const startIdx = 4 - q.levels;
-            for (let i = startIdx; i < 4; i++) {
-                pyramidHtml += `<div class="tier t${4-i}">${labels[i]}: <input type="number" id="qval-${i-startIdx}"></div>`;
-            }
-            area.innerHTML = pyramidHtml + `</div><button class="btn" onclick="ansPyramid()">Submit Answer</button>`;
-        }
-    }
-
-    function ans(choice) {
-        const q = randomizedQuestions[curQ];
-        const fb = document.getElementById('quiz-fb');
-        fb.style.display = 'block';
-        if (choice === q.a) { 
-            score++; 
-            fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
-        } else { 
-            fb.innerText = "Incorrect. The correct answer was: " + q.a; 
-            fb.className = "feedback-box wrong"; 
-        }
-        document.getElementById('quiz-next').style.display = 'inline-block';
-    }
-
-    function ansPyramid() {
-        const q = randomizedQuestions[curQ];
-        const fb = document.getElementById('quiz-fb');
-        fb.style.display = 'block';
-        let correct = true;
-        for (let i = 0; i < q.levels; i++) {
-            const val = document.getElementById(`qval-${i}`).value;
-            if (val == "" || val != q.a[i]) correct = false;
-        }
-        if (correct) { 
-            score++; 
-            fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
-        } else { 
-            fb.innerText = "Incorrect. Values should be: " + q.a.join(', '); 
-            fb.className = "feedback-box wrong"; 
-        }
-        document.getElementById('quiz-next').style.display = 'inline-block';
-    }
-
-    function nextQuestion() {
-        curQ++;
-        if (curQ < 10) showQuestion();
-        else finish();
-    }
-
-    function finish() {
-        if (score >= 7) {
-            const name = prompt("You passed! Enter your name:");
-            document.getElementById('display-name').innerText = name || "Student";
-            document.getElementById('display-score').innerText = score;
-            showSub('cert');
-        } else {
-            alert(`Score: ${score}/10. You need 70% to pass. Restarting quiz...`);
-            startQuiz();
-        }
-    }
-</script>
-</body>
-</html>
+        document.getElementById('quiz-header').innerText = `Question ${curQ + 1}
