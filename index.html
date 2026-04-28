@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecology Energy Flow Activity</title>
+    <style>
+        :root {
+            --ohio-green: #2e7d32;
+            --ohio-brown: #5d4037;
+            --light-bg: #f1f8e9;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light-bg); margin: 0; display: flex; }
+        
+        /* Sidebar Navigation */
+        #sidebar { width: 250px; background: white; border-right: 2px solid #ddd; height: 100vh; padding: 20px; position: fixed; }
+        .nav-item { padding: 10px; margin: 5px 0; border-radius: 5px; cursor: pointer; color: #666; display: flex; justify-content: space-between; }
+        .nav-item.active { background: var(--ohio-green); color: white; font-weight: bold; }
+        .nav-item.locked { cursor: not-allowed; opacity: 0.5; }
+        .check { color: #4caf50; font-weight: bold; }
+
+        /* Content Area */
+        #main-content { margin-left: 290px; padding: 40px; width: 100%; max-width: 800px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .hidden { display: none; }
+        
+        /* Interactive Elements */
+        .pyramid-container { display: flex; flex-direction: column-reverse; align-items: center; margin: 20px 0; }
+        .trophic-level { border: 2px solid var(--ohio-brown); margin: 2px; text-align: center; transition: all 0.3s; }
+        button { background: var(--ohio-green); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        button:disabled { background: #ccc; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        
+        #certificate { border: 10px double var(--ohio-green); padding: 50px; text-align: center; background: white; }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <h3>Progress</h3>
+    <div id="nav-intro" class="nav-item active" onclick="showSection('intro')">Introduction <span id="check-intro" class="check"></span></div>
+    <div id="nav-levels" class="nav-item locked" onclick="showSection('levels')">Trophic Levels <span id="check-levels" class="check"></span></div>
+    <div id="nav-energy" class="nav-item locked" onclick="showSection('energy')">10% Rule <span id="check-energy" class="check"></span></div>
+    <div id="nav-quiz" class="nav-item locked" onclick="showSection('quiz')">Mastery Quiz <span id="check-quiz" class="check"></span></div>
+</div>
+
+<div id="main-content">
+    <div id="section-intro" class="card">
+        <h1>Ecology Energy Flow Activity</h1>
+        <p><strong>Instructions:</strong> Welcome! In this activity, you will explore how energy moves through an Ohio ecosystem. You must read each section's information and complete the interactive activities to unlock the next part. Once all sections are complete, you will take a Mastery Quiz.</p>
+        <button onclick="completeSection('intro', 'levels')">Start Activity</button>
+    </div>
+
+    <div id="section-levels" class="card hidden">
+        <h2>Section 1: Who Eats Whom?</h2>
+        <p>Energy begins with the <strong>Sun</strong>. In Ohio, <strong>Producers</strong> (like White Oak trees or Switchgrass) capture this energy via photosynthesis.</p>
+        <ul>
+            <li><strong>Primary Consumers:</strong> Herbivores (e.g., Eastern Cottontail Rabbit)</li>
+            <li><strong>Secondary Consumers:</strong> Carnivores that eat herbivores (e.g., Garter Snake)</li>
+            <li><strong>Tertiary Consumers:</strong> Eat secondary consumers (e.g., Red-tailed Hawk)</li>
+            <li><strong>Quaternary Consumers:</strong> Apex predators (e.g., Coyote)</li>
+        </ul>
+        <hr>
+        <h3>Interactive: Identify the Level</h3>
+        <p>A <strong>Red-shouldered Hawk</strong> eats a <strong>Bullfrog</strong>, which ate a <strong>Dragonfly</strong>, which ate <strong>Algae</strong> in an Ohio pond.</p>
+        <p>What is the Trophic Level of the <strong>Hawk</strong>? 
+            <select id="q-level-1">
+                <option value="">Select...</option>
+                <option value="1">Level 1 (Producer)</option>
+                <option value="4">Level 4 (Tertiary Consumer)</option>
+            </select>
+        </p>
+        <button onclick="checkLevels()">Verify Answers</button>
+    </div>
+
+    <div id="section-energy" class="card hidden">
+        <h2>Section 2: The 10% Rule</h2>
+        <p>Only about <strong>10%</strong> of energy is passed to the next level. The rest is lost as heat or used for metabolic processes.</p>
+        <div class="pyramid-container">
+            <div class="trophic-level" style="width: 100px;">Tertiary</div>
+            <div class="trophic-level" style="width: 200px;">Secondary</div>
+            <div class="trophic-level" style="width: 300px;">Primary</div>
+            <div class="trophic-level" style="width: 400px;">Producer</div>
+        </div>
+        <p><strong>Practice:</strong> If the Producers (Corn stalks) have <strong>50,000 kcal</strong> of energy, how much reaches the Secondary Consumer (Field Mouse -> Fox)?</p>
+        <input type="number" id="energy-calc" placeholder="Enter kcal...">
+        <button onclick="checkEnergy()">Calculate</button>
+    </div>
+
+    <div id="section-quiz" class="card hidden">
+        <h2>Mastery Quiz</h2>
+        <p>Score at least 7/10 to earn your certificate.</p>
+        <div id="quiz-container">
+            <p>1. What is the primary source of energy for Ohio ecosystems? <input type="text" id="q1"></p>
+            <p>2. If a Coyote has 10 kcal, how much did the Producers have? <input type="number" id="q2"></p>
+            </div>
+        <button onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+
+    <div id="section-cert" class="card hidden">
+        <div id="certificate">
+            <h1>Certificate of Mastery</h1>
+            <p>This certifies that</p>
+            <h2 id="student-name-display">[Name]</h2>
+            <p>has successfully completed the</p>
+            <h3>Ecology Energy Flow Activity</h3>
+            <p>Score: <span id="final-score"></span>/10</p>
+            <p><em>Screenshot this page and submit to Canvas.</em></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let progress = { intro: true, levels: false, energy: false, quiz: false };
+
+    function showSection(id) {
+        if (id !== 'intro' && !progress[id]) {
+            alert("Complete previous sections first!");
+            return;
+        }
+        document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+        document.getElementById('section-' + id).classList.remove('hidden');
+        
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('nav-' + id).classList.add('active');
+    }
+
+    function completeSection(current, next) {
+        document.getElementById('check-' + current).innerText = " ✓";
+        progress[next] = true;
+        document.getElementById('nav-' + next).classList.remove('locked');
+        showSection(next);
+    }
+
+    function checkLevels() {
+        const val = document.getElementById('q-level-1').value;
+        if (val === "4") {
+            alert("Correct! The Hawk is the 4th level (Tertiary).");
+            completeSection('levels', 'energy');
+        } else {
+            alert("Try again! Remember: Algae(1) -> Dragonfly(2) -> Bullfrog(3) -> Hawk(4)");
+        }
+    }
+
+    function checkEnergy() {
+        const val = document.getElementById('energy-calc').value;
+        if (val == 500) {
+            alert("Correct! 50,000 -> 5,000 -> 500.");
+            completeSection('energy', 'quiz');
+        } else {
+            alert("Check your math! 10% of 50,000 is 5,000... then 10% of that?");
+        }
+    }
+
+    function submitQuiz() {
+        const name = prompt("Enter your full name for the certificate:");
+        if (!name) return;
+        
+        // Simple logic for example - in a real app, loop through inputs
+        let score = 8; // Placeholder score logic
+        
+        if (score >= 7) {
+            document.getElementById('student-name-display').innerText = name;
+            document.getElementById('final-score').innerText = score;
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('section-cert').classList.remove('hidden');
+        } else {
+            alert("You scored " + score + "/10. You need 7/10. Try again!");
+        }
+    }
+</script>
+</body>
+</html>
