@@ -20,12 +20,13 @@
         .check-mark { display: none; color: var(--green); font-weight: bold; }
         .completed .check-mark { display: inline; }
 
-        /* Images and Section 2 Tight Spacing */
+        /* Images and Spacing */
         .s1-img { width: 50%; display: block; margin: 5px auto; border-radius: 8px; }
         .s2-img { width: 80%; display: block; margin: 2px auto; border-radius: 8px; }
         #page-s1 p, #page-s1 h2, #page-s1 h3, #page-s2 p, #page-s2 h2 { margin-bottom: 6px; margin-top: 2px; }
 
         .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 15px; }
+        .btn:hover { background: var(--secondary); }
         
         .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 10px 0; width: 100%; }
         .tier { border: 2px solid #333; margin: 2px; padding: 10px; font-weight: bold; text-align: center; color: #000; }
@@ -40,7 +41,6 @@
         input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
         #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 15px; padding-top: 10px; }
 
-        /* 50% Smaller Certificate */
         #cert-wrap { width: 55%; margin: 0 auto; }
         .cert-border { border: 10px double var(--gold); padding: 30px; background: #fff; text-align: center; color: #2c3e50; }
         .cert-header { font-family: 'Cinzel', serif; font-size: 1.8rem; margin: 0; color: #1a252f; }
@@ -79,7 +79,7 @@
 
     <div id="page-s1-practice" class="card hidden">
         <h2>Section 1 Practice</h2>
-        <p>Analyze the food web and identify the specific organisms for each role.</p>
+        <p>Analyze the food web (6.jpg) and identify the specific organisms for each role.</p>
         <img src="6.jpg" style="width: 70%; display: block; margin: auto;">
         <div id="s1-questions">
             <p>1. Identify a Producer: <input type="text" id="s1-p1"></p>
@@ -89,7 +89,10 @@
             <p>5. What do the arrows represent? <input type="text" id="s1-p5"></p>
         </div>
         <div id="s1-fb" class="feedback-box"></div>
-        <div style="text-align: center;"><button class="btn" onclick="checkS1()">Check Answers</button></div>
+        <div style="text-align: center;">
+            <button id="s1-btn" class="btn" onclick="checkS1()">Check Answers</button>
+            <button id="s1-retry" class="btn hidden" onclick="resetS1()">Try Again</button>
+        </div>
     </div>
 
     <div id="page-s2" class="card hidden">
@@ -128,7 +131,7 @@
                 <h1 class="cert-header">Certificate</h1>
                 <p style="font-size: 0.7rem; font-weight: bold; color: var(--gold);">ENERGY FLOW MASTERY</p>
                 <input type="text" class="cert-name-input" placeholder="Your Name">
-                <p style="font-size: 0.8rem;">Mastery Score:</p>
+                <p style="font-size: 0.8rem;">Score Achieved:</p>
                 <h2 id="display-score" style="color: var(--primary); font-size: 1.5rem; margin: 5px 0;"></h2>
                 <div class="seal">PASS</div>
                 <p style="font-size: 0.6rem;">Date: <b id="display-date"></b></p>
@@ -143,11 +146,15 @@
 
     function checkS1() {
         const fb = document.getElementById('s1-fb');
-        const p1 = document.getElementById('s1-p1').value.toLowerCase().trim();
-        const p2 = document.getElementById('s1-p2').value.toLowerCase().trim();
-        const p3 = document.getElementById('s1-p3').value.toLowerCase().trim();
-        const p4 = document.getElementById('s1-p4').value.toLowerCase().trim();
-        const p5 = document.getElementById('s1-p5').value.toLowerCase().trim();
+        const btn = document.getElementById('s1-btn');
+        const retry = document.getElementById('s1-retry');
+        const inputs = [
+            document.getElementById('s1-p1').value.toLowerCase().trim(),
+            document.getElementById('s1-p2').value.toLowerCase().trim(),
+            document.getElementById('s1-p3').value.toLowerCase().trim(),
+            document.getElementById('s1-p4').value.toLowerCase().trim(),
+            document.getElementById('s1-p5').value.toLowerCase().trim()
+        ];
 
         const keys = {
             producers: ["tree", "carrot", "vegetable", "bush", "flower", "flowers", "sunflower", "grass"],
@@ -157,21 +164,29 @@
             arrows: ["energy", "flow", "energy flow", "direction of energy"]
         };
 
-        let errors = [];
-        if (!keys.producers.includes(p1)) errors.push("Producer");
-        if (!keys.primary.includes(p2)) errors.push("Primary Consumer");
-        if (!keys.secondary.includes(p3)) errors.push("Secondary Consumer");
-        if (!keys.tertiary.includes(p4)) errors.push("Tertiary Consumer");
-        if (!p5.includes("energy")) errors.push("Arrows Answer");
+        let correct = keys.producers.includes(inputs[0]) &&
+                      keys.primary.includes(inputs[1]) &&
+                      keys.secondary.includes(inputs[2]) &&
+                      keys.tertiary.includes(inputs[3]) &&
+                      inputs[4].includes("energy");
 
-        if (errors.length > 0) {
-            fb.innerText = "Check: " + errors.join(", ");
+        if (!correct) {
+            fb.innerText = "One or more answers are incorrect.";
             fb.className = "feedback-box wrong";
+            btn.classList.add('hidden');
+            retry.classList.remove('hidden');
         } else {
             fb.innerText = "Correct! Section 2 is open.";
             fb.className = "feedback-box correct";
+            retry.classList.add('hidden');
             unlock('s2');
         }
+    }
+
+    function resetS1() {
+        document.getElementById('s1-fb').style.display = 'none';
+        document.getElementById('s1-retry').classList.add('hidden');
+        document.getElementById('s1-btn').classList.remove('hidden');
     }
 
     function checkS2() {
@@ -182,9 +197,9 @@
         const fb = document.getElementById('s2-fb');
         if (v1 == 10000 && v2 == 1000 && v3 == 100 && v4 == 10) {
             fb.innerText = "Correct!"; fb.className = "feedback-box correct";
-            document.getElementById('nav-s2').classList.add('completed'); // Fix check mark
+            document.getElementById('nav-s2').classList.add('completed');
             setTimeout(() => { state.quiz = true; startQuiz(); navigate('quiz'); }, 1500);
-        } else { fb.innerText = "Incorrect Math."; fb.className = "feedback-box wrong"; }
+        } else { fb.innerText = "Incorrect. Try again."; fb.className = "feedback-box wrong"; }
     }
 
     function navigate(id) {
@@ -255,7 +270,7 @@
         if (choice === q.a) { 
             fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
             score++;
-            setTimeout(nextQuestion, 1200); // Auto-advance on correct
+            setTimeout(nextQuestion, 1000); 
         } else { 
             fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; 
             document.getElementById('quiz-next').innerText = "Try Again";
@@ -274,7 +289,7 @@
         if (correct) { 
             fb.innerText = "Correct!"; fb.className = "feedback-box correct"; 
             score++;
-            setTimeout(nextQuestion, 1200); // Auto-advance on correct
+            setTimeout(nextQuestion, 1000); 
         } else { 
             fb.innerText = "Incorrect!"; fb.className = "feedback-box wrong"; 
             document.getElementById('quiz-next').innerText = "Try Again";
@@ -289,7 +304,8 @@
             curQ++;
             if (curQ < 10) showQuestion();
             else {
-                document.getElementById('display-score').innerText = (score/10 * 100) + "%";
+                document.getElementById('nav-quiz').classList.add('completed');
+                document.getElementById('display-score').innerText = score + " out of 10";
                 document.getElementById('display-date').innerText = new Date().toLocaleDateString();
                 showSub('cert');
             }
