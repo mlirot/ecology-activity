@@ -28,7 +28,7 @@
         .correct { background: #d4edda; color: #155724; display: block; }
         .wrong { background: #f8d7da; color: #721c24; display: block; }
         #citation { font-size: 0.85rem; color: #7f8c8d; font-style: italic; border-top: 1px solid #eee; margin-top: 20px; padding-top: 10px; }
-        input[type="number"] { width: 80px; padding: 5px; }
+        input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -62,14 +62,14 @@
 
     <div id="page-s1-practice" class="card hidden">
         <h2>Section 1 Practice</h2>
-        <p>Analyze the food web (6.jpg) and identify the roles below.</p>
+        <p>Analyze the food web (6.jpg) and identify the roles below. <b>Note: Answers cannot be left blank.</b></p>
         <img src="6.jpg" style="width: 70%; display: block; margin: auto;">
         <div id="s1-questions">
-            <p>1. Identify a Producer: <input type="text" id="s1-p1"></p>
-            <p>2. Identify a Primary Consumer: <input type="text" id="s1-p2"></p>
-            <p>3. Identify a Secondary Consumer: <input type="text" id="s1-p3"></p>
-            <p>4. Identify a Tertiary Consumer: <input type="text" id="s1-p4"></p>
-            <p>5. What do arrows represent? <input type="text" id="s1-p5"></p>
+            <p>1. Identify a Producer: <input type="text" id="s1-p1" placeholder="e.g. Grass"></p>
+            <p>2. Identify a Primary Consumer: <input type="text" id="s1-p2" placeholder="e.g. Rabbit"></p>
+            <p>3. Identify a Secondary Consumer: <input type="text" id="s1-p3" placeholder="e.g. Fox"></p>
+            <p>4. Identify a Tertiary Consumer: <input type="text" id="s1-p4" placeholder="e.g. Hawk"></p>
+            <p>5. What do arrows represent? <input type="text" id="s1-p5" placeholder="e.g. Energy Flow"></p>
         </div>
         <div id="s1-fb" class="feedback-box"></div>
         <div style="text-align: center;"><button class="btn" onclick="checkS1()">Check Answers</button></div>
@@ -87,16 +87,16 @@
 
     <div id="page-s2-practice" class="card hidden">
         <div id="s2-part1">
-            <h2>Pyramid Practice</h2>
-            <p id="s2-instruction">The Producer level has 10,000 J of energy, place this number where the Producers are on the pyramid. Continue to fill each missing trophic level on the pyramid.</p>
+            <h2>Pyramid Practice: Step 1</h2>
+            <p>The <b>Producer</b> level has <b>10,000 J</b> of energy, place this number where the Producers are on the pyramid. Continue to fill each missing trophic level on the pyramid.</p>
             <div class="pyramid-container">
-                <div class="tier t4">Tertiary: <input type="number" id="s2-t4"> J</div>
-                <div class="tier t3">Secondary: <input type="number" id="s2-t3"> J</div>
-                <div class="tier t2">Primary: <input type="number" id="s2-t2"> J</div>
-                <div class="tier t1">Producers: <input type="number" id="s2-t1"> J</div>
+                <div class="tier t4">Tertiary Consumer: <input type="number" id="s2-t4"> J</div>
+                <div class="tier t3">Secondary Consumer: <input type="number" id="s2-t3"> J</div>
+                <div class="tier t2">Primary Consumer: <input type="number" id="s2-t2"> J</div>
+                <div class="tier t1">Producer: <input type="number" id="s2-t1"> J</div>
             </div>
             <div id="s2-fb" class="feedback-box"></div>
-            <div style="text-align: center;"><button class="btn" onclick="checkS2()">Check Pyramid</button></div>
+            <div style="text-align: center;"><button class="btn" onclick="checkS2()">Verify Pyramid</button></div>
         </div>
     </div>
 
@@ -123,11 +123,12 @@
     let state = { intro: true, s1: false, s2: false, quiz: false };
     let score = 0, curQ = 0, randomizedQuestions = [];
 
+    // DATA BANKS
     const section1Bank = [
         { type: 'multi', q: "Which of these diagrams represents multiple overlapping feeding paths?", a: "Food Web", o: ["Food Chain", "Food Web", "Energy Pyramid", "Biomass Cycle"] },
-        { type: 'multi', q: "In the food chain Carrot -> Rabbit -> Fox, which is the Primary Consumer?", a: "Rabbit", o: ["Carrot", "Rabbit", "Fox", "Lion"] },
+        { type: 'multi', q: "In the food chain Grass -> Grasshopper -> Snake, which is the Primary Consumer?", a: "Grasshopper", o: ["Grass", "Grasshopper", "Snake", "Owl"] },
         { type: 'multi', q: "What do the arrows in a food web specifically show?", a: "Flow of energy", o: ["Who is the strongest", "Flow of energy", "Migration patterns", "Population size"] },
-        { type: 'multi', q: "An organism that can produce its own food using sunlight is called a(n):", a: "Autotroph", o: ["Autotroph", "Heterotroph", "Decomposer", "Scavenger"] },
+        { type: 'multi', q: "An organism that can produce its own food is called a(n):", a: "Autotroph", o: ["Autotroph", "Heterotroph", "Decomposer", "Scavenger"] },
         { type: 'multi', q: "Which organism is responsible for returning nutrients to the soil?", a: "Decomposer", o: ["Producer", "Primary Consumer", "Decomposer", "Tertiary Consumer"] },
         { type: 'multi', q: "If a hawk eats a snake that ate a mouse, the hawk is a:", a: "Tertiary Consumer", o: ["Producer", "Primary Consumer", "Secondary Consumer", "Tertiary Consumer"] },
         { type: 'multi', q: "A food chain represents a _______ pathway of energy flow.", a: "Single", o: ["Single", "Complex", "Circular", "Overlapping"] },
@@ -177,25 +178,56 @@
         document.getElementById('nav-' + prev).classList.add('completed');
         state[id] = true;
         document.getElementById('nav-' + id).classList.remove('locked');
-        if (id === 'quiz') startQuiz(); else navigate(id);
+        navigate(id);
     }
 
     function checkS1() {
-        document.getElementById('s1-fb').innerText = "Verified! Section 2 is now open.";
-        document.getElementById('s1-fb').className = "feedback-box correct";
-        setTimeout(() => unlock('s2'), 1000);
+        const fb = document.getElementById('s1-fb');
+        const answers = [
+            document.getElementById('s1-p1').value.trim(),
+            document.getElementById('s1-p2').value.trim(),
+            document.getElementById('s1-p3').value.trim(),
+            document.getElementById('s1-p4').value.trim(),
+            document.getElementById('s1-p5').value.trim()
+        ];
+        
+        if (answers.some(a => a === "")) {
+            fb.innerText = "Please complete all fields before continuing.";
+            fb.className = "feedback-box wrong";
+            return;
+        }
+
+        fb.innerText = "Great job! Section 2 is now unlocked.";
+        fb.className = "feedback-box correct";
+        unlock('s2');
     }
 
     function checkS2() {
         const v1 = document.getElementById('s2-t1').value;
+        const v2 = document.getElementById('s2-t2').value;
+        const v3 = document.getElementById('s2-t3').value;
         const v4 = document.getElementById('s2-t4').value;
         const fb = document.getElementById('s2-fb');
-        if (v1 == 10000 && v4 == 10) {
-            fb.innerText = "Math correct! Unlocking Mastery Quiz...";
+
+        if (!v1 || !v2 || !v3 || !v4) {
+            fb.innerText = "All levels must have a value.";
+            fb.className = "feedback-box wrong";
+            return;
+        }
+
+        if (v1 == 10000 && v2 == 1000 && v3 == 100 && v4 == 10) {
+            fb.innerText = "Pyramid accurate! Moving to Mastery Quiz...";
             fb.className = "feedback-box correct";
-            setTimeout(() => unlock('quiz'), 1500);
+            // FORCE UNLOCK AND GO TO QUIZ
+            setTimeout(() => {
+                state.quiz = true;
+                document.getElementById('nav-s2').classList.add('completed');
+                document.getElementById('nav-quiz').classList.remove('locked');
+                startQuiz();
+                navigate('quiz');
+            }, 2000);
         } else {
-            fb.innerText = "Incorrect. Remember: Producers are 10,000, divide by 10 for each level up.";
+            fb.innerText = "Check your math. Divide the lower level by 10 to get the level above it.";
             fb.className = "feedback-box wrong";
         }
     }
@@ -241,7 +273,8 @@
         const fb = document.getElementById('quiz-fb');
         let correct = true;
         for (let i = 0; i < q.levels; i++) {
-            if (document.getElementById(`qval-${i}`).value != q.a[i]) correct = false;
+            const inputVal = document.getElementById(`qval-${i}`).value;
+            if (inputVal == "" || inputVal != q.a[i]) { correct = false; }
         }
         if (correct) { score++; fb.innerText = "Correct Math!"; fb.className = "feedback-box correct"; }
         else { fb.innerText = `Incorrect. The values should be: ${q.a.join(', ')}`; fb.className = "feedback-box wrong"; }
